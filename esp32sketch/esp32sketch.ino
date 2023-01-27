@@ -12,6 +12,7 @@ String baseUrl = "http://192.168.31.208:8080";
 String serverName = baseUrl + "/update-sensor";
 const char* ssid = "Xiaomi_2CC1";
 const char* password = "@1122334455667788@";
+bool collectData = false;
 
 
 void setup() {
@@ -61,9 +62,10 @@ void Task1code(void* pvParameters) {
   Serial.println(xPortGetCoreID());
 
   for (;;) {
-    potValue = analogRead(sensorPin);
-    Serial.print("sensor value: ");
-    Serial.println(potValue);
+    if (collectData) {
+      Serial.print("sensor value: ");
+      Serial.println(getSensorValue());
+    }
     delay(delayTime);
   }
 }
@@ -74,6 +76,14 @@ void Task2code(void* pvParameters) {
 
   for (;;) {
     long temp = getDelayTime();
+    long tempCollectData = getCollectData();
+
+    if ( tempCollectData != collectData){
+      collectData = tempCollectData;
+      Serial.print("Setting collect data to: ");
+      Serial.println(collectData);
+    }
+
     if (temp != delayTime) {
       delayTime = temp;
       Serial.print("Delay time changed to: ");
@@ -87,6 +97,30 @@ void Task2code(void* pvParameters) {
 int getSensorValue() {
   int potValue = analogRead(sensorPin);
   return potValue;
+}
+
+bool getCollectData() {
+
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+
+    String delayTimeUrl = baseUrl + "/getRequestData";
+    http.begin(delayTimeUrl.c_str());
+    int httpResponseCode = http.GET();
+
+    if (httpResponseCode > 0) {
+      String payload = http.getString();
+      return payload == "true";
+    } else {
+      Serial.print("Error code: ");
+      Serial.println(httpResponseCode);
+    }
+    http.end();
+  } else {
+    Serial.println("WIfi disconneced.");
+  }
+
+  return false;
 }
 
 long getDelayTime() {
@@ -108,7 +142,7 @@ long getDelayTime() {
   } else {
     Serial.println("WIfi disconneced.");
   }
-  return 2000;
+  return delayTime;
 }
 
 void loop() {
