@@ -29,12 +29,15 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   delayTime = getDelayTime();
+  collectData = getCollectData();
 
   Serial.print("delayTime set to ");
   Serial.println(delayTime);
 
+  Serial.print("collecData set to ");
+  Serial.println(collectData);
 
-  //create a task that will be executed in the Task2code() function, with priority 1 and executed on core 1
+
   xTaskCreatePinnedToCore(
     Task2code, /* Task function. */
     "Task2",   /* name of task. */
@@ -63,8 +66,8 @@ void Task1code(void* pvParameters) {
 
   for (;;) {
     if (collectData) {
-      Serial.print("sensor value: ");
-      Serial.println(getSensorValue());
+      int value = getSensorValue();
+      sendData(value);      
     }
     delay(delayTime);
   }
@@ -121,6 +124,31 @@ bool getCollectData() {
   }
 
   return false;
+}
+
+
+void sendData(int value){
+  if (WiFi.status() == WL_CONNECTED) {
+      HTTPClient http;
+
+      String serverPath = serverName + "?sensor1="+value;
+      http.begin(serverPath.c_str());
+      int httpResponseCode = http.GET();
+
+      if (httpResponseCode > 0) {
+        String payload = http.getString();
+        Serial.print("value: ");
+        Serial.print(value);
+        Serial.println(" was sent to the server.");
+      } else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+      }
+      // Free resources
+      http.end();
+    } else {
+      Serial.println("WiFi Disconnected");
+    }
 }
 
 long getDelayTime() {
