@@ -36,7 +36,19 @@ function App() {
         }
     }, [requestDataToogle, BACKEND_URI]);
 
-    return <div className="App">Hello World!</div>;
+    const handleOnClick = () => {
+        setRequestDataToogle((oldVal) => !oldVal);
+    };
+
+    return (
+        <>
+            <p>
+                Request Data Status:{" "}
+                <span>{requestDataToogle ? "true" : "false"}</span>
+            </p>
+            <button onClick={handleOnClick}>Toogle</button>
+        </>
+    );
 }
 
 export default App;
