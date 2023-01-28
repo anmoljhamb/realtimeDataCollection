@@ -44,7 +44,7 @@ const SensorData = () => {
             },
             title: {
                 display: true,
-                text: "Chart.js Line Chart",
+                text: "Line Chart",
             },
         },
     };
@@ -53,7 +53,7 @@ const SensorData = () => {
         labels: sensorData.map((data) => data.time),
         datasets: [
             {
-                label: "Dataset 1",
+                label: "Sensor 1",
                 data: sensorData.map((data) => Number.parseInt(data.sensor1)),
                 borderColor: "#674188",
                 backgroundColor: "#c3acd0",
