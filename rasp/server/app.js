@@ -44,4 +44,8 @@ app.get("/getData", (req, res) => {
     return res.status(200).json(getData());
 });
 
+app.get("/getDataJson", (req, res) => {
+    return res.download(path.join(__dirname, "data.json"));
+});
+
 module.exports = app;
