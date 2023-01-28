@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 function saveToFile(values) {
-    const time = moment().format("h:mm:ss a, MMMM Do YYYY");
+    const time = moment().format("h:mm:ss a, DD/MM/YY");
 
     values = { ...values, time };
 
