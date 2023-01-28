@@ -1,5 +1,27 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 import io from "socket.io-client";
+import axios from "axios";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 const SensorData = () => {
     const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
@@ -10,13 +32,52 @@ const SensorData = () => {
         });
     }, [BACKEND_URI]);
 
+    const [sensorData, setSensorData] = useState<
+        { sensor1: string; time: string }[]
+    >([]);
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top" as const,
+            },
+            title: {
+                display: true,
+                text: "Chart.js Line Chart",
+            },
+        },
+    };
+
+    const data = {
+        labels: sensorData.map((data) => data.time),
+        datasets: [
+            {
+                label: "Dataset 1",
+                data: sensorData.map((data) => Number.parseInt(data.sensor1)),
+                borderColor: "rgb(255, 99, 132)",
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+        ],
+    };
+
+    useEffect(() => {
+        axios({ method: "GET", url: `${BACKEND_URI}/getData` }).then((resp) => {
+            setSensorData(resp.data);
+        });
+    }, [BACKEND_URI]);
+
+    useEffect(() => {
+        console.log(sensorData);
+    }, [sensorData]);
+
     useEffect(() => {
         socket.on("connect", () => {
             console.log("user connected.");
         });
 
         socket.on("dataStreamUpdated", (data) => {
-            console.log(data);
+            setSensorData(data);
         });
 
         return () => {
@@ -25,7 +86,11 @@ const SensorData = () => {
         };
     }, [socket]);
 
-    return <div>Sensor Data Here</div>;
+    return (
+        <>
+            <Line options={options} data={data} />
+        </>
+    );
 };
 
 export default SensorData;

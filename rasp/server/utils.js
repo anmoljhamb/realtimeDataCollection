@@ -13,7 +13,7 @@ function saveToFile(values) {
 
     pastData = JSON.parse(pastData);
 
-    let newData = [values, ...pastData];
+    let newData = [...pastData, values];
     fs.writeFileSync(
         path.join(__dirname, "data.json"),
         JSON.stringify(newData)
