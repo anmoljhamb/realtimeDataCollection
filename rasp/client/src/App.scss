@@ -15,6 +15,25 @@
         place-content: center;
         place-items: center;
         padding: 0;
+        button,
+        a {
+            width: 18rem;
+            padding: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: var(--accent);
+            outline: none;
+            border: 0.1rem solid var(--accent);
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.8rem;
+            &:hover {
+                background-color: var(--teritary);
+                border-radius: 1rem;
+                color: var(--accent);
+            }
+        }
         div.boardControl {
             background-color: var(--teritary);
             width: 100%;
@@ -23,24 +42,7 @@
             justify-content: center;
             align-items: center;
             font-size: 3rem;
-            button {
-                width: 18rem;
-                padding: 1rem;
-                font-weight: bold;
-                text-transform: uppercase;
-                background-color: var(--accent);
-                outline: none;
-                border: 0.1rem solid var(--accent);
-                color: var(--primary);
-                cursor: pointer;
-                transition: var(--transition);
-                font-size: 1.8rem;
-                &:hover {
-                    background-color: var(--teritary);
-                    border-radius: 1rem;
-                    color: var(--accent);
-                }
-            }
+
             form {
                 flex: 1;
                 display: flex;
@@ -88,6 +90,13 @@
             place-content: center;
             place-items: center;
             padding: 2rem;
+            a {
+                text-decoration: none;
+                text-align: center;
+                &:hover {
+                    background-color: var(--secondary);
+                }
+            }
         }
     }
 }

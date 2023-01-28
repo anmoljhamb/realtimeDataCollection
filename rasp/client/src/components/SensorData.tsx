@@ -99,6 +99,9 @@ const SensorData = () => {
 
     return (
         <div className="chart">
+            <a href={`${BACKEND_URI}/getDataJson`} download="sensorData.json">
+                Download Data
+            </a>
             <Line options={options} data={data} />
         </div>
     );
