@@ -10,7 +10,7 @@ let requestData = false;
 let delayTime = 2000;
 
 app.use(express.json());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(cors());
 
 app.get("/", (req, res) => {
