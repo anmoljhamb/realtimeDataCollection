@@ -23,7 +23,7 @@ ChartJS.register(
     Legend
 );
 
-const SensorData = () => {
+const SensorData = ({ limit }: { limit: number }) => {
     const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
     const socket = useMemo(() => {
         return io(BACKEND_URI!, {
@@ -31,8 +31,6 @@ const SensorData = () => {
             reconnectionDelay: 500,
         });
     }, [BACKEND_URI]);
-
-    const limit = useState<number>(25)[0];
 
     const [sensorData, setSensorData] = useState<
         { sensor1: string; time: string }[]
