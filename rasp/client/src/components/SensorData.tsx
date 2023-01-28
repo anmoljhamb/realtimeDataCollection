@@ -53,6 +53,10 @@ const SensorData = ({ limit }: { limit: number }) => {
         arr: Array<{ sensor1: string; time: string }>,
         currLimit: number
     ) => {
+        if (arr.length < currLimit) {
+            return arr;
+        }
+
         return arr.slice(arr.length - currLimit, arr.length);
     };
 
