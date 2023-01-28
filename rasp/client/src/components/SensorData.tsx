@@ -32,7 +32,7 @@ const SensorData = () => {
         });
     }, [BACKEND_URI]);
 
-    const [limit, setLimit] = useState<number>(15);
+    const [limit, setLimit] = useState<number>(25);
 
     const [sensorData, setSensorData] = useState<
         { sensor1: string; time: string }[]
