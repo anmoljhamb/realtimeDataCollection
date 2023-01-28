@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap");
 :root {
-    --primary: #ad8e70;
-    --secondary: #ffebb7;
-    --teritary: #ff6e31;
-    --accent: #243763;
+    --primary: #fffbf5;
+    --secondary: #f7efe5;
+    --teritary: #c3acd0;
+    --accent: #674188;
 
     --border: 0.1rem solid #ff6e31;
     --borderRadius: 1rem;
+    --transition: all 0.3s ease-in-out;
 }
 
 * {

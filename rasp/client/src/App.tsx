@@ -58,31 +58,39 @@ function App() {
     };
 
     return (
-        <>
-            <p>
-                Request Data Status:{" "}
-                <span>{requestDataToogle ? "true" : "false"}</span>
-            </p>
-            <button onClick={handleOnClick}>Toogle</button>
-            <form onSubmit={handleDelayForm}>
-                <label htmlFor="delayTime">
-                    Delay Time <span>{delayTime}</span>
-                </label>
-                <input
-                    type="range"
-                    min="500"
-                    max="8000"
-                    step="100"
-                    name="delayTime"
-                    value={delayTime}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        setDelayTime(Number.parseInt(event.target.value));
-                    }}
-                />
-                <button>Change Delay Time</button>
-            </form>
+        <div className="App">
+            <div className="boardControl">
+                <form onSubmit={handleDelayForm}>
+                    <label htmlFor="delayTime">
+                        Delay Time <span>{delayTime}</span>
+                    </label>
+                    <input
+                        type="range"
+                        min="500"
+                        max="8000"
+                        step="100"
+                        name="delayTime"
+                        value={delayTime}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                            setDelayTime(Number.parseInt(event.target.value));
+                        }}
+                    />
+                    <button>Change Delay Time</button>
+                </form>
+                <div className="requestData">
+                    <p>
+                        Getting Data:{" "}
+                        <span className={requestDataToogle ? "true" : "false"}>
+                            {requestDataToogle ? "true" : "false"}
+                        </span>
+                    </p>
+                    <button onClick={handleOnClick}>
+                        Turn {requestDataToogle ? "off" : "on"}
+                    </button>
+                </div>
+            </div>
             <SensorData />
-        </>
+        </div>
     );
 }
 

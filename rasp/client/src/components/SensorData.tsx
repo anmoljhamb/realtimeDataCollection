@@ -55,8 +55,8 @@ const SensorData = () => {
             {
                 label: "Dataset 1",
                 data: sensorData.map((data) => Number.parseInt(data.sensor1)),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                borderColor: "#674188",
+                backgroundColor: "#c3acd0",
             },
         ],
     };
@@ -87,9 +87,9 @@ const SensorData = () => {
     }, [socket]);
 
     return (
-        <>
+        <div className="chart">
             <Line options={options} data={data} />
-        </>
+        </div>
     );
 };
 
