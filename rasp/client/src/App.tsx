@@ -9,6 +9,7 @@ function App() {
     const [requestDataToogle, setRequestDataToogle] = useState<boolean | null>(
         null
     );
+    const [displayDelayTime, setDisplayDelayTime] = useState<number>(2000);
     const [delayTime, setDelayTime] = useState<number>(2000);
 
     useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
         );
         axios({ method: "GET", url: `${BACKEND_URI}/getDelayTime` }).then(
             (resp) => {
+                setDisplayDelayTime(resp.data);
                 setDelayTime(resp.data);
             }
         );
@@ -51,9 +53,10 @@ function App() {
         event.preventDefault();
         axios({
             method: "GET",
-            url: `${BACKEND_URI}/setDelayTime/${delayTime}`,
+            url: `${BACKEND_URI}/setDelayTime/${displayDelayTime}`,
         }).then((resp) => {
             console.log(resp.data);
+            setDelayTime(displayDelayTime);
         });
     };
 
@@ -62,7 +65,11 @@ function App() {
             <div className="boardControl">
                 <form onSubmit={handleDelayForm}>
                     <label htmlFor="delayTime">
-                        Delay Time <span>{delayTime}</span>
+                        Delay Time{" "}
+                        <span>
+                            {displayDelayTime}
+                            {displayDelayTime !== delayTime && "*"}
+                        </span>
                     </label>
                     <input
                         type="range"
@@ -70,9 +77,11 @@ function App() {
                         max="8000"
                         step="100"
                         name="delayTime"
-                        value={delayTime}
+                        value={displayDelayTime}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            setDelayTime(Number.parseInt(event.target.value));
+                            setDisplayDelayTime(
+                                Number.parseInt(event.target.value)
+                            );
                         }}
                         className="slider"
                     />
