@@ -8,7 +8,7 @@ TaskHandle_t Task2;
 
 int sensorPin = 33;
 long delayTime = 2000;
-String baseUrl = "http://192.168.31.208:8080";
+String baseUrl = "http://rasp.local";
 String serverName = baseUrl + "/update-sensor";
 const char* ssid = "Xiaomi_2CC1";
 const char* password = "@1122334455667788@";
