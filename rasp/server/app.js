@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const moment = require("moment");
 
 let requestData = false;
 let delayTime = 2000;
@@ -44,14 +45,28 @@ app.get("/setDelayTime/:time", (req, res) => {
     return res.status(200).json({ message: "Ok" });
 });
 
+app.get("/getData", (req, res) => {
+    return res.status(200).json(
+        JSON.parse(
+            fs.readFileSync(path.join(__dirname, "data.json"), {
+                encoding: "utf-8",
+            })
+        )
+    );
+});
+
 function saveToFile(values) {
+    const time = moment().format("h:mm:ss a, MMMM Do YYYY"); // January 28th 2023, 1:20:29 pm
+
+    values = { ...values, time };
+
     let pastData = fs.readFileSync(path.join(__dirname, "data.json"), {
         encoding: "utf-8",
     });
 
     pastData = JSON.parse(pastData);
 
-    let newData = [...pastData, values];
+    let newData = [values, ...pastData];
     fs.writeFileSync(
         path.join(__dirname, "data.json"),
         JSON.stringify(newData)
