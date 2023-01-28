@@ -32,6 +32,8 @@ const SensorData = () => {
         });
     }, [BACKEND_URI]);
 
+    const [limit, setLimit] = useState<number>(15);
+
     const [sensorData, setSensorData] = useState<
         { sensor1: string; time: string }[]
     >([]);
@@ -49,12 +51,21 @@ const SensorData = () => {
         },
     };
 
+    const getLimited = (
+        arr: Array<{ sensor1: string; time: string }>,
+        currLimit: number
+    ) => {
+        return arr.slice(arr.length - currLimit, arr.length);
+    };
+
     const data = {
-        labels: sensorData.map((data) => data.time),
+        labels: getLimited(sensorData, limit).map((data) => data.time),
         datasets: [
             {
                 label: "Sensor 1",
-                data: sensorData.map((data) => Number.parseInt(data.sensor1)),
+                data: getLimited(sensorData, limit).map((data) =>
+                    Number.parseInt(data.sensor1)
+                ),
                 borderColor: "#674188",
                 backgroundColor: "#c3acd0",
             },
@@ -68,7 +79,7 @@ const SensorData = () => {
     }, [BACKEND_URI]);
 
     useEffect(() => {
-        console.log(sensorData);
+        // console.log(sensorData);
     }, [sensorData]);
 
     useEffect(() => {
