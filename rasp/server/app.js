@@ -4,21 +4,15 @@ const morgan = require("morgan");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
-const { saveToFile } = require("./utils");
 
 let requestData = false;
 let delayTime = 2000;
 
 app.use(express.json());
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(cors());
 
 app.get("/", (req, res) => {
-    res.status(200).json({ message: "Ok" });
-});
-
-app.get("/update-sensor", (req, res) => {
-    saveToFile(req.query);
     res.status(200).json({ message: "Ok" });
 });
 

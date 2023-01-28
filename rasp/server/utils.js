@@ -1,7 +1,9 @@
 const moment = require("moment");
+const fs = require("fs");
+const path = require("path");
 
 function saveToFile(values) {
-    const time = moment().format("h:mm:ss a, MMMM Do YYYY"); // January 28th 2023, 1:20:29 pm
+    const time = moment().format("h:mm:ss a, MMMM Do YYYY");
 
     values = { ...values, time };
 
