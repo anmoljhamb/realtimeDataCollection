@@ -12,10 +12,7 @@ let delayTime = 2000;
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
-
-app.get("/", (req, res) => {
-    res.status(200).json({ message: "Ok" });
-});
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/getRequestData", (req, res) => {
     res.send(requestData);
