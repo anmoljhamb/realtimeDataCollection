@@ -3,7 +3,7 @@ const app = require("./app");
 const path = require("path");
 const fs = require("fs");
 const { Server } = require("socket.io");
-const { saveToFile } = require("./utils");
+const { saveToFile, getData } = require("./utils");
 require("dotenv").config({ path: path.join(__dirname, "config.env") });
 
 const PORT = process.env.PORT || 5000;
@@ -13,6 +13,7 @@ const io = new Server(server, { cors: "*" });
 app.get("/update-sensor", (req, res) => {
     saveToFile(req.query);
     res.status(200).json({ message: "Ok" });
+    io.emit("dataStreamUpdated", getData());
 });
 
 io.on("connection", (socket) => {

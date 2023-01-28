@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const { getData } = require("./utils");
 
 let requestData = false;
 let delayTime = 2000;
@@ -40,13 +41,7 @@ app.get("/setDelayTime/:time", (req, res) => {
 });
 
 app.get("/getData", (req, res) => {
-    return res.status(200).json(
-        JSON.parse(
-            fs.readFileSync(path.join(__dirname, "data.json"), {
-                encoding: "utf-8",
-            })
-        )
-    );
+    return res.status(200).json(getData());
 });
 
 module.exports = app;

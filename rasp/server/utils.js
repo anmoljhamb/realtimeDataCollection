@@ -20,6 +20,15 @@ function saveToFile(values) {
     );
 }
 
+function getData() {
+    return JSON.parse(
+        fs.readFileSync(path.join(__dirname, "data.json"), {
+            encoding: "utf-8",
+        })
+    );
+}
+
 module.exports = {
     saveToFile,
+    getData,
 };
