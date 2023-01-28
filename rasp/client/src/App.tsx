@@ -74,6 +74,7 @@ function App() {
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             setDelayTime(Number.parseInt(event.target.value));
                         }}
+                        className="slider"
                     />
                     <button>Change Delay Time</button>
                 </form>
