@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./App.scss";
 import axios from "axios";
+import { SensorData } from "./components";
 
 function App() {
     const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
@@ -80,6 +81,7 @@ function App() {
                 />
                 <button>Change Delay Time</button>
             </form>
+            <SensorData />
         </>
     );
 }
